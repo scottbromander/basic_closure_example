@@ -19,6 +19,10 @@
 			// function.
 			var privateValue = 5;
 
+			// A value we could access, a 'public value' by default. We achieve this,
+			// by using 'this' with dot notation.
+			this.publicExposedValue = "Accessing this directly";
+
 			// 5. privateFunc is called from publicFunc
 			function privateFunc (){
 				// 6. Once again, because of the scope of this function, we have
@@ -62,7 +66,9 @@
 		// called 'publicValue'. This function returns the privateValue.
 		var el = document.getElementById("number");
 		el.innerText = firstObj.publicValue();
-		
+
+		//Just an example of the public value being accessed directly.
+		console.log(firstObj.publicExposedValue);
 		</script>
 	</body>
 </html>
