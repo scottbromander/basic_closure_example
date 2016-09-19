@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+
+	<body>
+		<!-- Shows the current value is of the bound var 'private var' -->
+		<p id="number">Has not run yet</p>
+		<!-- 
+		Button that runs a function that runs the publicFunc 
+		function on myClosed Object.
+		-->
+		<button onclick="clickButton()">Run Closure</button>
+
+		<script>
+		function myClosedObject (){
+			var privateValue = 5;
+
+			// 5. privateFunc is called from publicFunc
+			function privateFunc (){
+				// 6. Once again, because of the scope of this function, we have
+				// access to the privateValue. We multiply it by 2, and return it.
+				// The return is sent up. It rides all the way back up to the 
+				// initial value set of 'el.innerText'.
+				privateValue *= 2;
+				return privateValue ;
+			}
+
+			// privileged methods
+
+			// 3. publicFunc is called from the clickButton function
+			this.publicFunc = function(){
+				// 4. privateFunc is run. Because of the scope of the object, 
+				// we have access to scope of privateFunc.
+				return privateFunc();
+			};
+
+			this.publicValue = function(){
+				return privateValue;
+			};
+		} 
+
+		// Button is on the DOM with the ID 'number'
+		// This is the function that runs when it is clicked
+		function clickButton(){
+			var el = document.getElementById("number");
+
+			// 2. Inner text is set to the return of publicFunc.
+			el.innerText = firstObj.publicFunc();
+			// 7. The logic chain is complete el.innerText is changed,
+			// this result is seen on the DOM.
+		}
+
+		// 1. Object is created.
+		var firstObj = new myClosedObject ();
+
+		// Code that just sets the initial value of the bound var,
+		// privateValue. It accesses it with a 'getter' function
+		// called 'publicValue'. This function returns the privateValue.
+		var el = document.getElementById("number");
+		el.innerText = firstObj.publicValue();
+		
+		</script>
+	</body>
+</html>
